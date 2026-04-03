@@ -1,0 +1,44 @@
+services:
+    frontend:
+        build: ./frontend.Dockerfile # it moves to frontend folder and looks for Dockerfile
+        image: rakeshakuluru/frontend:1.0.0 # it is equivalent to docker build -t rakeshakuluru/frontend:1.0.0
+        container_name: frontend
+        depends_on:
+            - catalogue
+            - user
+            - cart
+        ports:
+            - "80:80"
+    catalogue:
+        build: ./catalogue.Dockerfile # it moves to catalogue folder and looks for Dockerfile
+        image: rakeshakuluru/catalogue:1.0.0 # it is equivalent to docker build -t rakeshakuluru/catalogue:1.0.0
+        container_name: catalogue
+        depends_on:
+            - mongodb
+    user:
+        build: ./user.Dockerfile # it moves to user folder and looks for Dockerfile
+        image: rakeshakuluru/user:1.0.0 # it is equivalent to docker build -t rakeshakuluru/user:1.0.0
+        container_name: user
+        depends_on:
+            - redis
+    cart:
+        build: ./cart.Dockerfile # it moves to cart folder and looks for Dockerfile
+        image: rakeshakuluru/cart:1.0.0 # it is equivalent to docker build -t rakeshakuluru/cart:1.0.0
+        container_name: cart
+        depends_on:
+            - redis
+    mongodb:
+        build: ./mongodb.Dockerfile # it moves to mongodb folder and looks for Dockerfile
+        image: rakeshakuluru/mongodb:1.0.0 # it is equivalent to docker build -t rakeshakuluru/mongodb:1.0.0
+        container_name: mongodb
+    redis:
+        build: ./redis.Dockerfile # it moves to redis folder and looks for Dockerfile
+        image: rakeshakuluru/redis:1.0.0 # it is equivalent to docker build -t rakeshakuluru/redis:1.0.0
+        container_name: redis
+
+networks:
+    default:
+        name: roboshop
+        driver: bridge
+        external: false
+
