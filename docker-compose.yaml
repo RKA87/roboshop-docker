@@ -49,22 +49,36 @@ services:
         build: ./mongodb # it moves to mongodb folder and looks for Dockerfile
         image: rakeshakuluru/mongodb:1.0.0 # it is equivalent to docker build -t rakeshakuluru/mongodb:1.0.0
         container_name: mongodb
+        volumes:
+          - mongodb:/data/db # it is equivalent to docker volume create mongodb and docker run -v mongodb:/data/db
     mysql:
         build: ./mysql # it moves to mysql folder and looks for Dockerfile
         image: rakeshakuluru/mysql:1.0.0 # it is equivalent to docker build -t rakeshakuluru/mysql:1.0.0
         container_name: mysql
+        volumes:
+          - mysql:/var/lib/mysql # it is equivalent to docker volume create mysql and docker run -v mysql:/var/lib/mysql
     redis:
         image: redis:7.0 # using pre-built redis image
         container_name: redis
+        volumes:
+          - redis:/data # it is equivalent to docker volume create redis and docker run -v redis:/data
     rabbitmq:
         image: rabbitmq:3 #we are calling rabbitmq image from docker hub directly so we don't have to build it
         environment:
             RABBITMQ_DEFAULT_USER: roboshop
             RABBITMQ_DEFAULT_PASS: roboshop123
         container_name: rabbitmq
+        volumes:
+          - rabbitmq:/var/lib/rabbitmq # it is equivalent to docker volume create rabbitmq and docker run -v rabbitmq:/var/lib/rabbitmq
 
 networks:
     default:
         name: roboshop
         driver: bridge
         external: false
+
+volumes:
+    mongodb:
+    mysql:
+    redis:
+    rabbitmq:
