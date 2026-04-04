@@ -1,3 +1,4 @@
+# Using a minimal image of Nodejs with alpine linux to reduce the image size and attack surface
 FROM node:20.20.2-alpine3.23
 EXPOSE 8080
 WORKDIR /app
