@@ -6,6 +6,7 @@
 # RUN unzip -o catalogue-v3.zip && rm -f catalogue-v3.zip
 
 FROM node:20
+EXPOSE 8080
 WORKDIR /app
 COPY package.json .
 COPY *.js .
