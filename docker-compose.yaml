@@ -1,6 +1,6 @@
 services:
     frontend:
-        build: ./frontend.Dockerfile # it moves to frontend folder and looks for Dockerfile
+        build: ./frontend # it moves to frontend folder and looks for Dockerfile
         image: rakeshakuluru/frontend:1.0.0 # it is equivalent to docker build -t rakeshakuluru/frontend:1.0.0
         container_name: frontend
         depends_on:
@@ -11,58 +11,51 @@ services:
         ports:
             - "80:80"
     catalogue:
-        build: ./catalogue.Dockerfile # it moves to catalogue folder and looks for Dockerfile
+        build: ./catalogue # it moves to catalogue folder and looks for Dockerfile
         image: rakeshakuluru/catalogue:1.0.0 # it is equivalent to docker build -t rakeshakuluru/catalogue:1.0.0
         container_name: catalogue
         depends_on:
             - mongodb
     user:
-        build: ./user.Dockerfile # it moves to user folder and looks for Dockerfile
+        build: ./user # it moves to user folder and looks for Dockerfile
         image: rakeshakuluru/user:1.0.0 # it is equivalent to docker build -t rakeshakuluru/user:1.0.0
         container_name: user
         depends_on:
             - redis
             - mongodb
     cart:
-        build: ./cart.Dockerfile # it moves to cart folder and looks for Dockerfile
+        build: ./cart # it moves to cart folder and looks for Dockerfile
         image: rakeshakuluru/cart:1.0.0 # it is equivalent to docker build -t rakeshakuluru/cart:1.0.0
         container_name: cart
         depends_on:
             - redis
             - catalogue
     shipping:
-        build: ./shipping.Dockerfile # it moves to shipping folder and looks for Dockerfile
+        build: ./shipping # it moves to shipping folder and looks for Dockerfile
         image: rakeshakuluru/shipping:1.0.0 # it is equivalent to docker build -t rakeshakuluru/shipping:1.0.0
         container_name: shipping
         depends_on:
             - mysql
             - cart
     payment:
-        build: ./payment.Dockerfile # it moves to payment folder and looks for Dockerfile
+        build: ./payment # it moves to payment folder and looks for Dockerfile
         image: rakeshakuluru/payment:1.0.0 # it is equivalent to docker build -t rakeshakuluru/payment:1.0.0
         container_name: payment
         depends_on:
             - rabbitmq
             - cart
             - user
-    dispatch:
-        build: ./dispatch.Dockerfile # it moves to dispatch folder and looks for Dockerfile
-        image: rakeshakuluru/dispatch:1.0.0 # it is equivalent to docker build -t rakeshakuluru/dispatch:1.0.0
-        container_name: dispatch
-        depends_on:
-            - rabbitmq
     mongodb:
-        build: ./mongodb.Dockerfile # it moves to mongodb folder and looks for Dockerfile
+        build: ./mongodb # it moves to mongodb folder and looks for Dockerfile
         image: rakeshakuluru/mongodb:1.0.0 # it is equivalent to docker build -t rakeshakuluru/mongodb:1.0.0
         container_name: mongodb
-    redis:
-        build: ./redis.Dockerfile # it moves to redis folder and looks for Dockerfile
-        image: rakeshakuluru/redis:1.0.0 # it is equivalent to docker build -t rakeshakuluru/redis:1.0.0
-        container_name: redis
     mysql:
-        build: ./mysql.Dockerfile # it moves to mysql folder and looks for Dockerfile
+        build: ./mysql # it moves to mysql folder and looks for Dockerfile
         image: rakeshakuluru/mysql:1.0.0 # it is equivalent to docker build -t rakeshakuluru/mysql:1.0.0
         container_name: mysql
+    redis:
+        image: redis:7.0 # using pre-built redis image
+        container_name: redis
     rabbitmq:
         image: rabbitmq:3 #we are calling rabbitmq image from docker hub directly so we don't have to build it
         environment:
