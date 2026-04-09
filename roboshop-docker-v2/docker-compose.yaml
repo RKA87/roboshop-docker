@@ -1,0 +1,105 @@
+# By defining the ports and volumes nothing useful for building the image.
+# It will be only useful when we run the container using docker-compose up -d 
+
+services:
+  mongodb:
+    build: ./mongodb
+    image: rakeshakuluru/mongodb:1.1.1
+    container_name: mongodb
+    # ports:
+    #   - "27017:27017"
+    volumes:
+      - mongodb:/data/db
+  redis:
+    build: ./redis #it will go to respective directory
+    image: rakeshakuluru/redis:1.1.0 #it is equivalent to docker build -t rakeshakuluru/redis:1.1.0 ./redis
+    container_name: redis
+    # ports:
+    #   - "6379:6379"
+    volumes:
+      - redis:/data
+  rabbitmq:
+    build: ./rabbitmq
+    image: rakeshakuluru/rabbitmq:1.1.0
+    container_name: rabbitmq
+    # ports:
+    #   - "5672:5672"
+    volumes:
+      - rabbitmq:/data
+  mysql:
+    build: ./mysql
+    image: rakeshakuluru/mysql:1.1.0
+    container_name: mysql
+    # ports:
+    #   - "3306:3306"
+    volumes:
+      - mysql:/var/lib/mysql
+#Backend Services
+  user:
+    build: ./user
+    image: rakeshakuluru/user:1.1.1
+    container_name: user
+    depends_on:
+      - mongodb
+      - redis
+      - rabbitmq
+      - mysql
+  cart:
+    build: ./cart
+    image: rakeshakuluru/cart:1.1.1
+    container_name: cart
+    depends_on:
+      - mongodb
+      - redis
+      - rabbitmq
+      - mysql
+  shipping:
+    build: ./shipping
+    image: rakeshakuluru/shipping:1.1.1
+    container_name: shipping
+    depends_on:
+      - mongodb
+      - redis
+      - rabbitmq
+      - mysql
+  catalogue:
+    build: ./catalogue
+    image: rakeshakuluru/catalogue:1.1.1
+    container_name: catalogue
+    depends_on:
+      - mongodb
+      - redis
+      - rabbitmq
+      - mysql
+  payment:
+    build: ./payment
+    image: rakeshakuluru/payment:1.1.1
+    container_name: payment
+    depends_on:
+      - mongodb
+      - redis
+      - rabbitmq
+      - mysql
+  dispatch:
+    build: ./dispatch
+    image: rakeshakuluru/dispatch:1.1.1
+    container_name: dispatch
+    depends_on:
+      - mongodb
+      - redis
+      - rabbitmq
+      - mysql
+#Frontend Service
+  frontend:
+    build: ./frontend
+    image: rakeshakuluru/frontend:1.1.1
+    container_name: frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - user
+      - cart
+      - shipping
+      - catalogue
+      - payment
+      - dispatch
