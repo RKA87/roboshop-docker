@@ -14,5 +14,5 @@ RUN chown -R roboshop:roboshop /app
 USER roboshop
 ENV AMQP_HOST=rabbitmq \
     AMQP_USER=roboshop \
-    AMQP_PASSWORD=roboshop123
+    AMQP_PASS=roboshop123
 ENTRYPOINT ["/app/dispatch"]
