@@ -1,4 +1,4 @@
-FROM nginx:1.24
+FROM nginx:1.24.0-alpine3.17-slim
 
 RUN rm -rf /usr/share/nginx/html/ && \
     rm -rf /etc/nginx/conf.d/default.conf && \
